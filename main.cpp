@@ -120,7 +120,7 @@ string singleOperation(string strInput, char operation) {
 
 
 
-eint main() {
+int main() {
     string userInput;
     getline(cin, userInput);  // Read the entire input, including spaces
     cout << "User Input: " << userInput << endl;
