@@ -123,11 +123,15 @@ string formatExpression(string expression) {
         for (auto op : OPERATORS) {
             // space before and after
             if (expression[i] == op) {
-                if (expression[i - 1] != ' ') {
-                    expression.insert(i - 1, 1, ' ');
-                }
-                if (expression[i + 1] != ' ') {
+                // yeah.............
+                if (expression[i + 1] != ' ' and expression[i - 1] != ' ') {
                     expression.insert(i + 1, 1, ' ');
+                    expression.insert(i, 1, ' ');
+                    i += 2;
+                } else if (expression[i + 1] != ' ') {
+                    expression.insert(i + 1, 1, ' ');
+                } else if (expression[i - 1] != ' ') {
+                    expression.insert(i, 1, ' ');
                 }
             }
         }
