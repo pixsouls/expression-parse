@@ -118,16 +118,56 @@ string singleOperation(string strInput, char operation) {
 }
 
 
+string formatExpression(string expression) {
+    for (int i = 0; i < expression.size(); i++) {
+        for (auto op : OPERATORS) {
+            // space before and after
+            if (expression[i] == op) {
+                if (expression[i - 1] != ' ') {
+                    expression.insert(i - 1, 1, ' ');
+                }
+                if (expression[i + 1] != ' ') {
+                    expression.insert(i + 1, 1, ' ');
+                }
+            }
+        }
+    }
+    return expression;
+}
+
 
 std::string parseExpression(string expression) {
     cout << "User Input: " << expression << endl;
 
+    // check if expression given by user is valid 
+    // ERROR: needs at least 1 operator
+    bool isOperatorsPresent = false;
+    for (int i = 0; i < OPERATORS.size(); i++) {
+        if (expression.find(OPERATORS[i]) != string::npos) {
+            isOperatorsPresent = true;
+        }
+    }
+    if (!isOperatorsPresent) {
+        return "No operations found";
+    }
+
+
+    // ERROR: check if expression starts with an operator
+    for (auto op : OPERATORS) {
+        if (expression[0] == op) {
+            return "Expression cannot start with an operator";
+        }
+    }
+
+    expression = formatExpression(expression);
+    cout << "Interpretted As: " << expression << endl; 
+    string expressionResult;
     deque<char> operatorDeque = parseOperators(expression);
-    
+
     while (!operatorDeque.empty()) {
-        char op = operatorDeque.front(); // Get the front operator
-        operatorDeque.pop_front();             // Remove the top element
-        expression = singleOperation(expression, op);
+        char op = operatorDeque.front();
+        operatorDeque.pop_front();
+        expressionResult = singleOperation(expression, op);
     }
 
     return expression;
