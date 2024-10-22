@@ -77,22 +77,23 @@ string singleOperation(string strInput, char operation) {
     // Get left number (move left from the operator)
     int strPositionLeft = strPosition - 2;  // Start 2 positions before operator (to skip the space)
     string leftStr = "";
-    while (strPositionLeft >= 0 && strInput[strPositionLeft] != SPACE_CHARACTER) {
+    while (strPositionLeft >= 0 and strInput[strPositionLeft] != SPACE_CHARACTER) {
         leftStr = strInput[strPositionLeft] + leftStr;  // Collect digits from left
         strPositionLeft--;
     }
-    float leftOperand = stof(leftStr);  // Convert to float
+    // stof() is the method to convert to float
+    float leftOperand = stof(leftStr);  
 
     // Get right number (move right from the operator)
     int strPositionRight = strPosition + 2;  // Start 2 positions after operator (to skip the space)
     string rightStr = "";
-    while (strPositionRight < strInput.size() && strInput[strPositionRight] != SPACE_CHARACTER) {
+    while (strPositionRight < strInput.size() and strInput[strPositionRight] != SPACE_CHARACTER) {
         rightStr += strInput[strPositionRight];  // Collect digits from right
         strPositionRight++;
     }
     float rightOperand = stof(rightStr);  // Convert to float
 
-    // Perform the operation
+    // Perform the operation    
     float result = 0;
     switch (operation) {
         case '+':
@@ -124,13 +125,18 @@ string formatExpression(string expression) {
             // space before and after
             if (expression[i] == op) {
                 // yeah.............
+                // if 1+1 then 1 + 1
                 if (expression[i + 1] != ' ' and expression[i - 1] != ' ') {
                     expression.insert(i + 1, 1, ' ');
                     expression.insert(i, 1, ' ');
                     i += 2;
-                } else if (expression[i + 1] != ' ') {
+                }
+                // if 1 +1 then 1 + 1
+                else if (expression[i + 1] != ' ') {
                     expression.insert(i + 1, 1, ' ');
-                } else if (expression[i - 1] != ' ') {
+                } 
+                // if 1+ 1 then 1 + 1
+                else if (expression[i - 1] != ' ') {
                     expression.insert(i, 1, ' ');
                 }
             }
